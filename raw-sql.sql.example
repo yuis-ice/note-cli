@@ -1,0 +1,6 @@
+SELECT note.id, note.header, note.content from note
+    WHERE LOWER(note.header) REGEXP ?
+    AND LOWER(note.content) REGEXP ?
+    AND LOWER(note.entire_note) REGEXP ?
+    order by id asc
+    LIMIT ?
