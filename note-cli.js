@@ -10,6 +10,7 @@ const program = new commander.Command();
 const Confirm = require('prompt-confirm');
 var sqlite3 = require('sqlite3').verbose();
 const Database = require('better-sqlite3');
+var showdown  = require('showdown');
 
 //
 
@@ -20,7 +21,7 @@ program
   // .option('  -f, --file <file>', 'specify file to index', null ) // if not specified, NOTEFILES_LIST files will be indexed
   .option('-f, --file <file>', '(index) specify file to index', null ) // if not specified, NOTEFILES_LIST files will be indexed
   .option('-s, --search', 'set command type: search ' )
-  .option('-t, --search-type <type>', '(search) specify search type e.g. regex, like', null )
+  // .option('-t, --search-type <type>', '(search) specify search type e.g. regex, like', null ) // todo
   .option('-r, --regex', '(search) enable regex extension for search', true ) // enable by default
   .option('--header <keyword>', '(search) search by header', "." )
   .option('--content <keyword>', '(search) search by content', "." )
@@ -29,6 +30,7 @@ program
   .option('-S, --raw-sql <sql>', '(search) use raw SQL query for search', null )
   // .option('--no-sql', '(search) disable showing sql query executed' )
   .option('-H, --hide-sql', '(search) disable showing sql query executed' )
+  .option('-F, --format <format>', '(search) output format' , "json" )
   .option('--pcre-path <file>', 'set sqlite3 pcre file path for search', "/usr/lib/sqlite3/pcre.so" )
   .option('-d, --database <file>', 'specify database file for index/search', "./note-cli.db" )
   .option('--delete-database', 'delete database' )
@@ -54,17 +56,27 @@ async function search(){
   const db = new Database( program.database , { verbose: program.hideSql ? null : console.log });
   if (program.regex) db.loadExtension( program.pcrePath );
 
-  const stmt = db.prepare( program.rawSql ? program.rawSql : `SELECT note.id, note.header, note.content from note
+  const stmt = db.prepare( program.rawSql ? program.rawSql : `SELECT note.id, note.header, note.content, note.entire_note from note
     WHERE LOWER(note.header) REGEXP ?
     AND LOWER(note.content) REGEXP ?
     AND LOWER(note.entire_note) REGEXP ?
     order by id desc
     LIMIT ?`)
-    // .all( program.header , ".", ".") ;
     .all( program.header , program.content , program.note , program.limit ) ;
 
-  console.log(stmt );
-  // console.log(stmt.get('id') );
+  // console.log(stmt );
+  if (program.format == "json") console.log( JSON.stringify( stmt , null, 4) ) ;
+  if (program.format.match(new RegExp("^(md|markdown)$","gi"))) stmt.forEach(a => console.log( a.entire_note )) ;
+  if (program.format.match(new RegExp("^(html)$","gi"))) console.log(
+    JSON.stringify(
+      stmt.map(function(v){
+        v.content = (new showdown.Converter()).makeHtml(v.content);
+        v.entire_note = (new showdown.Converter()).makeHtml(v.entire_note);
+        return v;
+      })
+      , null, 4
+    )
+  );
 
 }
 

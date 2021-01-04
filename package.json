@@ -5,9 +5,11 @@
   "main": "note-cli.js",
   "dependencies": {
     "better-sqlite3": "^7.1.2",
+    "cli-highlight": "^2.1.9",
     "commander": "^6.2.1",
     "marked": "^1.2.7",
     "prompt-confirm": "^2.0.4",
+    "showdown": "^1.9.1",
     "sleep": "^6.3.0",
     "sqlite3": "^5.0.0"
   },
