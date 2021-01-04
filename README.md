@@ -33,9 +33,14 @@ I'm kind of person who likes to take a note on my favorite text editor (Atom edi
 
 ## Installation
 
-git cloen [url]
-cd [cd]
+```sh
+
+git clone https://github.com/yuis-ice/note-cli.git
+cd note-cli
+chmod 755 ./note-cli.js # if needed
 npm i
+
+```
 
 ## Requirement
 
