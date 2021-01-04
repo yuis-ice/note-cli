@@ -25,7 +25,7 @@ Markdown Indexing and Pcre Regular Expression Compatible Full Text Searching for
 
 ```
 
-## Basic comcept
+## Basic concept
 
 There are great note taking tools over there, such as Evernote. But the reason I quit using Evernote was its poor searching capability (i.e. cannot search some special characters; cannot search with regular expression, of course) and also, lack of extensibility. That's where Note-CLI comes in.
 
@@ -93,5 +93,5 @@ Options:
   --delete-database      delete database
   -y, --yes              no confirmation prompt
   -h, --help             display help for command
-  
+
 ```
