@@ -15,10 +15,7 @@ var showdown  = require('showdown');
 //
 
 program
-  // .option('-c, --command <type>', 'command type; index, search', 'search')
-  // .option('-i, --index <type>', 'command type: index ', false )
   .option('-i, --index', 'set command type: index ' )
-  // .option('  -f, --file <file>', 'specify file to index', null ) // if not specified, NOTEFILES_LIST files will be indexed
   .option('-f, --file <file>', '(index) specify file to index', null ) // if not specified, NOTEFILES_LIST files will be indexed
   .option('-s, --search', 'set command type: search ' )
   // .option('-t, --search-type <type>', '(search) specify search type e.g. regex, like', null ) // todo
@@ -38,12 +35,6 @@ program
   .parse(process.argv)
   ;
 
-// console.log(program.header, program.content, program.hideSql);
-
-// if (program.args.length === 0) program.help();
-// console.log(program.args.length, process.argv.length )
-// var NO_COMMAND_SPECIFIED = program.args.length === 0;
-// if (NO_COMMAND_SPECIFIED) program.help();
 if (! process.argv.slice(2).length) program.help();
 
 if (program.index) index();
