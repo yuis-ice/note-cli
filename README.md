@@ -100,3 +100,13 @@ Options:
   -h, --help             display help for command
 
 ```
+
+## LICENSE
+
+Note-CLI is released under the BSD-3-Clause license.
+
+Copyright (c) 2021, Fumiya Arisaka <yuis.twitter@gmail.com>
+All rights reserved.
+
+This source code is licensed under the BSD-style license found in the
+LICENSE file in the root directory of this source tree.
